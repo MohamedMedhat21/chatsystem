@@ -64,6 +64,8 @@ GEM
       faraday (~> 1)
       multi_json
     erubi (1.11.0)
+    et-orbi (1.2.7)
+      tzinfo
     faraday (1.10.2)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -88,6 +90,9 @@ GEM
     faraday-rack (1.0.0)
     faraday-retry (1.0.3)
     ffi (1.15.5)
+    fugit (1.7.2)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
     hashie (5.0.0)
@@ -116,6 +121,7 @@ GEM
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     puma (3.12.6)
+    raabro (1.4.0)
     racc (1.6.0)
     rack (2.2.4)
     rack-test (2.0.2)
@@ -151,10 +157,17 @@ GEM
     redis (4.8.0)
     ruby2_keywords (0.0.5)
     ruby_dep (1.5.0)
+    rufus-scheduler (3.8.2)
+      fugit (~> 1.1, >= 1.1.6)
     sidekiq (6.5.7)
       connection_pool (>= 2.2.5)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
+    sidekiq-scheduler (4.0.3)
+      redis (>= 4.2.0)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 4, < 7)
+      tilt (>= 1.4.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -168,6 +181,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (1.2.1)
     thread_safe (0.3.6)
+    tilt (2.0.11)
     tzinfo (1.2.10)
       thread_safe (~> 0.1)
     websocket-driver (0.7.5)
@@ -187,6 +201,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.8, >= 5.2.8.1)
   sidekiq
+  sidekiq-scheduler
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
