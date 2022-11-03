@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_03_163038) do
+ActiveRecord::Schema.define(version: 2022_11_03_175016) do
 
   create_table "applications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "token"
     t.string "name"
-    t.integer "chat_count"
+    t.integer "chat_count", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
