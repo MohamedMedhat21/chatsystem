@@ -21,6 +21,15 @@ module Api
       end
 
 
+      def show
+        application = Application.where(token: params[:token]).first
+        render json:{
+          name:application.name,
+          token:application.token,
+          chat_count:application.chat_count
+        },status: :ok
+      end
+
       private
 
       def application_params
