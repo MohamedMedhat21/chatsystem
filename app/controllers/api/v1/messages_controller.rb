@@ -3,7 +3,6 @@ module Api
       class MessagesController < ApplicationController
   
         def index
-          # render json: Application.pluck(:name, :token)
           application = Application.where(token: params[:application_token]).first
           chat = application.chats.where(number: params[:chat_number]).first
           messages = chat.messages
@@ -44,6 +43,13 @@ module Api
               else
                 render json: message.errors, status: :unprocessable_entity
               end
+        end
+        
+        def search
+          application = Application.where(token: params[:application_token]).first
+          chat = application.chats.where(number: params[:chat_number]).first
+          messages = chat.messages.search(params[:query]).records
+          render json: messages
         end
 
       end

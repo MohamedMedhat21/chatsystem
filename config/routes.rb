@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :applications, only: [:index,:create,:show,:update], param: :token do
         resources :chats ,only: [:index,:create,:show], param: :number do
           resources :messages,only: [:index,:create,:show,:update], param: :number
+          get "search", to:"messages#search"
         end
       end
     end
