@@ -38,7 +38,7 @@ module Api
           if chat.update(messages_count: params[:messages_count])
             head :no_content
           else
-            render json: @chat.errors, status: :unprocessable_entity
+            render json: chat.errors, status: :unprocessable_entity
           end
         end
   
