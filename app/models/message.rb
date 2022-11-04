@@ -4,5 +4,28 @@ class Message < ApplicationRecord
 
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
-    
+
+    mapping do
+        indexes :content, type: 'string'
+    end
+
+    def self.search_msgs(query,chat_id)
+        __elasticsearch__.search({
+            query: {
+                bool: {
+                    must: {
+                        wildcard:{
+                            content: '*'+query+'*'
+                        }
+                    },
+                    filter: {
+                        term: {
+                            chat_id: chat_id
+                        }
+                    }
+                }
+            }
+        })
+    end
+
 end

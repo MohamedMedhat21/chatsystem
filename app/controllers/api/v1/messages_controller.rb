@@ -48,8 +48,8 @@ module Api
         def search
           application = Application.where(token: params[:application_token]).first
           chat = application.chats.where(number: params[:chat_number]).first
-          messages = chat.messages.search(params[:query]).records
-          render json: messages
+          messages = chat.messages.search_msgs(params[:query],chat.id).records
+          render json: messages.to_json(except: [:id,:chat_id,:created_at,:updated_at])
         end
 
       end
