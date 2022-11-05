@@ -33,10 +33,14 @@ module Api
             application = Application.where(token: params[:application_token]).first
             chat = application.chats.where(number: params[:chat_number]).first
             message = chat.messages.where(number: params[:number]).first
-            render json:{
-                number:message.number,
-                content:message.content
-            },status: :ok
+            if message.nil?
+              render json: { error: "Couldn't find Message with 'number'= #{params[:number]}" }, status: 404
+            else
+              render json:{
+                  number:message.number,
+                  content:message.content
+              },status: :ok
+            end
         end
 
 
@@ -46,9 +50,9 @@ module Api
             message = chat.messages.where(number: params[:number]).first
             if message.update(content: params[:content])
                 head :no_content
-              else
+            else
                 render json: message.errors, status: :unprocessable_entity
-              end
+            end
         end
         
         def search
