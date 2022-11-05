@@ -10,7 +10,12 @@ module Api
         
         def create
             application = Application.where(token: params[:application_token]).first
-            chat = Chat.new(application_id:2,number:1)
+            if application.chats.last.nil?
+              chat_num = 1
+            else
+              chat_num = application.chats.last.number + 1
+            end
+            chat = Chat.new(application_id:application.id,number:chat_num)
     
             if chat.save
               render json:{
