@@ -17,7 +17,8 @@ module Api
             end
             chat = Chat.new(application_id:application.id,number:chat_num)
     
-            if chat.save
+            if chat.valid?
+              ChatCreationJob.perform_async(chat.application_id,chat.number)
               render json:{
                 number:chat.number
               }, status: :created
