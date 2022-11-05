@@ -16,10 +16,11 @@ gem 'puma', '~> 3.11'
 
 gem 'sidekiq'
 
+gem 'sidekiq-scheduler'
+
 gem 'elasticsearch-model'
 
 gem 'elasticsearch-rails'
-
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

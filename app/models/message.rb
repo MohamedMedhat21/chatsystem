@@ -6,7 +6,7 @@ class Message < ApplicationRecord
     include Elasticsearch::Model::Callbacks
 
     mapping do
-        indexes :content, type: 'string'
+        indexes :content, type: 'text'
     end
 
     def self.search_msgs(query,chat_id)
