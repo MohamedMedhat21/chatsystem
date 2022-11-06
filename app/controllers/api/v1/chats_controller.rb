@@ -1,51 +1,65 @@
 module Api
     module V1
       class ChatsController < ApplicationController
+        before_action :get_application
+
         def index
-          # render json: Application.pluck(:name, :token)
-          application = Application.where(token: params[:application_token]).first
-          chats = application.chats
-          render json: chats.select(:number,:messages_count).to_json(except: :id)
+          if @application.nil?
+            head :not_found
+          else
+            chats = @application.chats
+            render json: chats.to_json(only: [:number,:messages_count])
+          end
         end
         
         def create
-            application = Application.where(token: params[:application_token]).first
-            if application.chats.last.nil?
+          if @application.nil?
+            head :not_found
+          else
+            if @application.chats.last.nil?
               chat_num = 1
             else
-              chat_num = application.chats.last.number + 1
+              chat_num = @application.chats.last.number + 1
             end
-            chat = Chat.new(application_id:application.id,number:chat_num)
+
+            chat = Chat.new(application_id:@application.id,number:chat_num)
     
             if chat.valid?
               ChatCreationJob.perform_async(chat.application_id,chat.number)
-              render json:{
-                number:chat.number
-              }, status: :created
+              render json: chat.to_json(only: [:number]),status: :created
             else
               render json:chat.errors,status: :unprocessable_entity
             end
+          end
         end
 
 
         def show
-          application = Application.where(token: params[:application_token]).first
-          chat = application.chats.where(number: params[:number]).first
-          render json:{
-              number:chat.number,
-              messages_count:chat.messages_count
-          },status: :ok
+          if @application.nil?
+            head :not_found
+          else
+            chat = @application.chats.where(number: params[:number]).first
+            render json: chat.to_json(only: [:number,:messages_count]),status: :ok
+          end
         end
 
+        # def update
+        #   if @application.nil?
+        #     head :not_found
+        #   else
+        #     chat = @application.chats.where(number: params[:number]).first
+        #     if chat.update(messages_count: params[:messages_count])
+        #       head :no_content
+        #     else
+        #       render json: chat.errors, status: :unprocessable_entity
+        #     end
+        #   end
+        # end
 
-        def update
-          application = Application.where(token: params[:application_token]).first
-          chat = application.chats.where(number: params[:number]).first
-          if chat.update(messages_count: params[:messages_count])
-            head :no_content
-          else
-            render json: chat.errors, status: :unprocessable_entity
-          end
+        private
+
+        def get_application
+          @application = Application.where(token: params[:application_token]).first
         end
   
       end
