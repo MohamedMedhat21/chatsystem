@@ -1,21 +1,17 @@
 module Api
   module V1
     class ApplicationsController < ApplicationController
+      before_action :get_application, only: [:show,:update]
 
       def index
-        # render json: Application.pluck(:name, :token)
         applications = Application.all
-        render json: applications.select(:name,:token,:chat_count).to_json(except: :id)
+        render json: applications.to_json(only: [:name,:token,:chat_count])
       end
 
       def create
         application = Application.new(name:application_params[:name])
-
         if application.save
-          render json:{
-            name:application.name,
-            token:application.token
-          }, status: :created
+          render json: application.to_json(only: [:name,:token]), status: :created
         else
           render json:application.errors,status: :unprocessable_entity
         end
@@ -23,20 +19,22 @@ module Api
 
 
       def show
-        application = Application.where(token: params[:token]).first
-        render json:{
-          name:application.name,
-          token:application.token,
-          chat_count:application.chat_count
-        },status: :ok
+        if @application.nil?
+          head :not_found
+        else
+          render json: @application.to_json(only: [:name,:token,:chat_count]),status: :ok
+        end
       end
 
       def update
-        application = Application.where(token: params[:token]).first
-        if application.update(name:application_params[:name])
-          head :no_content
+        if @application.nil?
+          head :not_found
         else
-          render json:application.errors,status: :unprocessable_entity
+          if @application.update(name:application_params[:name])
+            head :no_content
+          else
+            render json:@application.errors,status: :unprocessable_entity
+          end
         end
       end
 
@@ -44,6 +42,10 @@ module Api
 
       def application_params
         params.require(:application).permit(:name)
+      end
+
+      def get_application
+        @application = Application.where(token: params[:token]).first
       end
     end
   end
