@@ -5,10 +5,10 @@ class Chat < ApplicationRecord
 
     def generate_number
         application = Application.where(id: self.application_id).first
-        if application.chats.last.nil?
-            self.number = 1
-        else
-            self.number = application.chats.last.number + 1
+        lst_chat_num = 0
+        if application.chats.last.nil? == false
+            lst_chat_num = application.chats.last.number
         end
+        self.number = lst_chat_num + 1
     end
 end

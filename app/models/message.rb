@@ -8,12 +8,12 @@ class Message < ApplicationRecord
 
     def generate_msg_number(application_id)
         application = Application.where(id: application_id).first
-        chat = application.chats.where(number: self.chat_id).first
-        if chat.messages.last.nil?
-            self.number = 1
-        else
-            self.number = chat.messages.last.number + 1
+        chat = application.chats.where(id: self.chat_id).first
+        lst_msg_num = 0
+        if chat.messages.last.nil? == false
+            lst_msg_num = chat.messages.last.number
         end
+        self.number = lst_msg_num + 1
     end
 
 
