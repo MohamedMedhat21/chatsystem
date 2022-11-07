@@ -1,5 +1,5 @@
 require 'sidekiq-scheduler'
-class UpdatecntsWorkerJob
+class UpdateCountsJob
     include Sidekiq::Job
     sidekiq_options retry:0
     

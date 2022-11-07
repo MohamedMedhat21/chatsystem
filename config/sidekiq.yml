@@ -1,4 +1,4 @@
 :schedule:
-  Update_Counts_Worker_Job:
+  Update_Counts_Job:
     cron: '0 * * * * *'   # Runs once per minute
-    class: UpdatecntsWorkerJob
+    class: UpdateCountsJob
