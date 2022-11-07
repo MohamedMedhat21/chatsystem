@@ -5,6 +5,18 @@ class Message < ApplicationRecord
     include Elasticsearch::Model
     include Elasticsearch::Model::Callbacks
 
+
+    def generate_msg_number(application_id)
+        application = Application.where(id: application_id).first
+        chat = application.chats.where(number: self.chat_id).first
+        if chat.messages.last.nil?
+            msg_num = 1
+        else
+            msg_num = chat.messages.last.number + 1
+        end
+    end
+
+
     mapping do
         indexes :content, type: 'text'
     end

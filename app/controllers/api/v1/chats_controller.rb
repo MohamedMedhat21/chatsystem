@@ -15,15 +15,9 @@ module Api
         def create
           if @application.nil?
             head :not_found
-          else
-            if @application.chats.last.nil?
-              chat_num = 1
-            else
-              chat_num = @application.chats.last.number + 1
-            end
-
-            chat = Chat.new(application_id:@application.id,number:chat_num)
-    
+          else          
+            chat = Chat.new(application_id:@application.id)
+            chat.number=chat.generate_number
             if chat.valid?
               ChatCreationJob.perform_async(chat.application_id,chat.number)
               render json: chat.to_json(only: [:number]),status: :created
