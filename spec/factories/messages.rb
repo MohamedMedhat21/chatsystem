@@ -1,6 +1,9 @@
 FactoryBot.define do
   factory :message do
-    number { 1 }
     content { "MyString" }
+    chat
+    before(:create) do |msg|
+      msg.generate_msg_number(1)
+    end
   end
 end

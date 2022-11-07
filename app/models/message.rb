@@ -10,7 +10,7 @@ class Message < ApplicationRecord
         application = Application.where(id: application_id).first
         chat = application.chats.where(id: self.chat_id).first
         lst_msg_num = 0
-        if chat.messages.last.nil? == false
+        if chat.nil? == false && chat.messages.nil? == false && chat.messages.last.nil? == false
             lst_msg_num = chat.messages.last.number
         end
         self.number = lst_msg_num + 1
