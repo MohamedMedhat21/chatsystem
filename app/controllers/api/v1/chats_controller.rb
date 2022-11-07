@@ -17,7 +17,7 @@ module Api
             head :not_found
           else          
             chat = Chat.new(application_id:@application.id)
-            chat.number=chat.generate_number
+            chat.generate_number
             if chat.valid?
               ChatCreationJob.perform_async(chat.application_id,chat.number)
               render json: chat.to_json(only: [:number]),status: :created
