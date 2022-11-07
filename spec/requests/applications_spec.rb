@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Applications", type: :request do
-  describe "GET /applications" do
+  describe "GET /api/v1/applications" do
     it "works! (now write some real specs)" do
       get '/api/v1/applications'
       expect(response).to have_http_status(200)
