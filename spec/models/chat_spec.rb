@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Chat, type: :model do
-  before(:all) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
   it "generate chat number works" do
     chat = FactoryBot.create(:chat)
     chat2 = FactoryBot.create(:chat,application_id:1)

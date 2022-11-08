@@ -3,9 +3,6 @@ require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 
 RSpec.describe "Messages", type: :request do
-  before(:all) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
   describe "GET /api/v1/applications/:application_token/chats/:chat_number/messages" do
     it "returns all messages" do
       msg = FactoryBot.create(:message)

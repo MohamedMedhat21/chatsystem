@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Applications", type: :request do
-  before(:all) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
   describe "GET /api/v1/applications" do
     it "returns all applications" do
       application = FactoryBot.create(:application)
