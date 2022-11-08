@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Message, type: :model do
+  before(:all) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
   it "generate message number works" do
     msg1 = FactoryBot.create(:message)
     msg2 = FactoryBot.create(:message,chat_id:1)
