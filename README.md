@@ -8,6 +8,8 @@ RESTful backend application for chat system
 # Clone the repo
 git clone https://github.com/MohamedMedhat21/chatsystem.git
 # in the repo directory
+cd chatsystem
+# run the app
 docker-compose up
 ```
 
