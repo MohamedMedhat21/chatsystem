@@ -2,6 +2,16 @@
 
 RESTful backend application for chat system
 
+note: if your are on a windows machine and facing error like this: /entrypoint.sh: 2: set: illegal option -
+
+change git line-ending settings with this command and restart your terminal
+
+```bash
+git config --global core.autocrlf true
+```
+or try solutions from this link
+https://github.com/carlossg/docker-maven/issues/114#issuecomment-527748335
+
 ## Get Started
 
 ```bash
